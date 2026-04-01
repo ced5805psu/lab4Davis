@@ -1,0 +1,1 @@
+Even though this project contains RabbitMQ files, they do not work. I had trouble with the installation and deletion of RabbitMQ, and those files aren't complete. Use the WebSend.java and WebReceive.java files instead
