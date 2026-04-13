@@ -37,7 +37,7 @@ public class WebReceive {
             // Serialization
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-                Pizza pizza = new Pizza("Provolone", "9", "pepperoni", "10.00");
+                Pizza pizza = new Pizza("Provolone", "9 in", "pepperoni", "$10.00");
                 List<Pizza> pizzas = new ArrayList<>();
                 pizzas.add(pizza);
                 pizzas.add(new Pizza("American", "5 in", "Onions", "$5.00"));
@@ -56,9 +56,9 @@ public class WebReceive {
                 //System.out.println("Price: " + deserializedPizza.getPizzaPrice());
                 String response = "Pizza object deserialized from JSON string: "
                         + "\nCheese: " + deserializedPizza.getPizzaCheese()
-                        + "\nSize: " + deserializedPizza.getPizzaSize()
-                        + "\nToppings: " + deserializedPizza.getPizzaToppings()
-                        + "\nPrice: " + deserializedPizza.getPizzaPrice();
+                        + System.lineSeparator() + " \r,Size: " + deserializedPizza.getPizzaSize()
+                        + System.lineSeparator() + " \r,Toppings: " + deserializedPizza.getPizzaToppings()
+                        + System.lineSeparator() + " \r,Price: " + deserializedPizza.getPizzaPrice();
 
                 exchange.sendResponseHeaders(200, response.getBytes().length);
                 OutputStream os = exchange.getResponseBody();
