@@ -29,31 +29,49 @@ public class WebReceive {
         server.createContext("/hello", new MyHandler());
         server.setExecutor(null); // creates a default executor
         server.start();
-
-        // Deserialization: Converting the JSON string back to a student object
-        Pizza pizza = new Pizza("Provolone", "9", "pepperoni", "10.00");
-        ObjectMapper objectMapper = new ObjectMapper();
-        String pizzaJson = objectMapper.writeValueAsString(pizza);
-        Pizza deserializedPizza = objectMapper.readValue(pizzaJson, Pizza.class);
-        System.out.println("\nStudent object deserialized from JSON string:");
-        System.out.println("Cheese: " + deserializedPizza.getPizzaCheese());
-        System.out.println("Size: " + deserializedPizza.getPizzaSize());
-        System.out.println("Toppings: " + deserializedPizza.getPizzaToppings());
-        System.out.println("Price: " + deserializedPizza.getPizzaPrice());
     }
 
     static class MyHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            Pizza pizza = new Pizza("Provolone", "9", "pepperoni", "10.00");
+            // Serialization
             ObjectMapper objectMapper = new ObjectMapper();
-            String pizzaJson = objectMapper.writeValueAsString(pizza);
-            String response = pizzaJson;
+            try {
+                Pizza pizza = new Pizza("Provolone", "9", "pepperoni", "10.00");
+                List<Pizza> pizzas = new ArrayList<>();
+                pizzas.add(pizza);
+                pizzas.add(new Pizza("American", "5 in", "Onions", "$5.00"));
+                pizzas.add(new Pizza("Cheddar", "9 in", "Peppers", "$9.00"));
 
-            exchange.sendResponseHeaders(200, response.getBytes().length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+                String pizzaJson = objectMapper.writeValueAsString(pizza);
+                System.out.println("Pizza objects serialized to JSON string:");
+                System.out.println(pizzaJson);
+
+                // Deserialization: Converting the JSON string back to a student object
+                Pizza deserializedPizza = objectMapper.readValue(pizzaJson, Pizza.class);
+                //System.out.println("\nPizza object deserialized from JSON string:");
+                //System.out.println("Cheese: " + deserializedPizza.getPizzaCheese());
+                //System.out.println("Size: " + deserializedPizza.getPizzaSize());
+                //System.out.println("Toppings: " + deserializedPizza.getPizzaToppings());
+                //System.out.println("Price: " + deserializedPizza.getPizzaPrice());
+                String response = "Pizza object deserialized from JSON string: "
+                        + "\nCheese: " + deserializedPizza.getPizzaCheese()
+                        + "\nSize: " + deserializedPizza.getPizzaSize()
+                        + "\nToppings: " + deserializedPizza.getPizzaToppings()
+                        + "\nPrice: " + deserializedPizza.getPizzaPrice();
+
+                exchange.sendResponseHeaders(200, response.getBytes().length);
+                OutputStream os = exchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+                ;
+            } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+            }
+
+
+
+
         }
     }
 }

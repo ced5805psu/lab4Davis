@@ -8,6 +8,8 @@ public class Pizza {
     private String pizzaPrice;
     private String pizzaToppings;
 
+    public Pizza() {}
+
     public Pizza(String pizzaCheese, String pizzaSize, String pizzaToppings, String pizzaPrice) {
         this.pizzaCheese = pizzaCheese;
         this.pizzaSize = pizzaSize;

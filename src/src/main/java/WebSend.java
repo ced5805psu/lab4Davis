@@ -12,19 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class WebSend {
     public static void main(String[] args) {
-        Pizza pizza = new Pizza("Provolone", "9", "pepperoni", "10.00");
-        List<Pizza> pizzas = new ArrayList<>();
-        pizzas.add(new Pizza("American", "5 in", "Onions","$5.00"));
-        pizzas.add(new Pizza("Cheddar", "9 in", "Peppers","$9.00"));
-
-        try (PrintWriter writer = new PrintWriter(new FileWriter("pizzas.txt"))) {
-            for (Pizza pizza1 : pizzas) {
-                writer.println(pizza.toFixedFormatString());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         try {
             // Specify the URL of the web service
             String url = "http://localhost:8000/hello";
@@ -39,7 +26,7 @@ public class WebSend {
             con.setRequestMethod("GET");
 
             // Set request headers if needed
-            // con.setRequestProperty("Content-Type", "application/json");
+            //con.setRequestProperty("Content-Type", "application/json");
 
             // Get the response code
             int responseCode = con.getResponseCode();
@@ -50,10 +37,10 @@ public class WebSend {
             String inputLine;
             StringBuilder response = new StringBuilder();
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            String pizzaJson = objectMapper.writeValueAsString(pizza);
-            System.out.println("Pizza object serialized to JSON string:");
-            System.out.println(pizzaJson);
+            //ObjectMapper objectMapper = new ObjectMapper();
+            //String pizzaJson = objectMapper.writeValueAsString(pizza);
+            //System.out.println("Pizza object serialized to JSON string:");
+            //System.out.println(pizzaJson);
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
